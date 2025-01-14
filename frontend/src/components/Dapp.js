@@ -92,13 +92,13 @@ export class Dapp extends React.Component {
         <div className="row">
           <div className="col-12">
             <h1>
-              {this.state.tokenData.name} ({this.state.tokenData.symbol})
+              {this.state.tokenData.name}
             </h1>
             <p>
-              Welcome <b>{this.state.selectedAddress}</b>, you have{" "}
+              Wilkommen liebes Mitglied (Account-Nr.:<b>{this.state.selectedAddress}</b>), du hast insgesamt{" "}
               <b>
                 {this.state.balance.toString()} {this.state.tokenData.symbol}
-              </b>
+              </b> (MusicCoin)
               .
             </p>
           </div>
