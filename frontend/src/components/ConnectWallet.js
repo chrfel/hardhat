@@ -8,7 +8,7 @@ import { Button } from 'primereact/button';
 export function ConnectWallet({ connectWallet, networkError, dismiss }) {
   return (
     <div className="container">
-      <div className="card mt-2 p-5">
+      <div className="card p-5">
         <Card>
           <div className="text-center text-900 text-3xl font-medium text">Herzlich Willkommmen!</div>
           <div className="mt-4 text-center">

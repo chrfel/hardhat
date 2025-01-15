@@ -18,6 +18,9 @@ root.render(
   <React.StrictMode>
     <PrimeReactProvider>
     <MyMenubar></MyMenubar>
+    <div className="flex flex-column align-items-center mt-2">
+      <img src="snare.gif" height="60px"></img>
+    </div>
     <Dapp />
     </PrimeReactProvider>
   </React.StrictMode>
