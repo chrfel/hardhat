@@ -19,6 +19,10 @@ import { TransactionErrorMessage } from "./TransactionErrorMessage";
 import { WaitingForTransactionMessage } from "./WaitingForTransactionMessage";
 import { NoTokensMessage } from "./NoTokensMessage";
 
+import { Card } from 'primereact/card';
+import { Webshop } from "./Webshop";
+
+
 // This is the default id used by the Hardhat Network
 const HARDHAT_NETWORK_ID = '31337';
 
@@ -72,8 +76,8 @@ export class Dapp extends React.Component {
     // clicks a button. This callback just calls the _connectWallet method.
     if (!this.state.selectedAddress) {
       return (
-        <ConnectWallet 
-          connectWallet={() => this._connectWallet()} 
+        <ConnectWallet
+          connectWallet={() => this._connectWallet()}
           networkError={this.state.networkError}
           dismiss={() => this._dismissNetworkError()}
         />
@@ -88,24 +92,53 @@ export class Dapp extends React.Component {
 
     // If everything is loaded, we render the application.
     return (
-      <div className="container p-4">
-        <div className="row">
-          <div className="col-12">
-            <h1>
-              {this.state.tokenData.name}
-            </h1>
-            <p>
+      <div className="container">
+        <div className="card p-5">
+          <Card>
+            <div className="text-center text-900 text-3xl font-medium text">SFZ MusicCoin</div>
+            <div className="mt-4 text-center">
               Wilkommen liebes Mitglied (Account-Nr.:<b>{this.state.selectedAddress}</b>), du hast insgesamt{" "}
               <b>
                 {this.state.balance.toString()} {this.state.tokenData.symbol}
-              </b> (MusicCoin)
-              .
-            </p>
-          </div>
+              </b> (MusicCoin).
+            </div>
+            {this.state.selectedAddress == '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266' && (
+              <div className="mt-4">
+                <div className="text-center text-900 text-xl font-medium text">MusicCoins überweisen</div>
+                <div className="mt-4 text-center">
+                {this.state.balance.eq(0) && (
+                  <NoTokensMessage selectedAddress={this.state.selectedAddress} />
+                )}
+                {this.state.balance.gt(0) && (
+                  <Transfer
+                    transferTokens={(to, amount) =>
+                      this._transferTokens(to, amount)
+                    }
+                    tokenSymbol={this.state.tokenData.symbol}
+                  />
+                )}
+                </div>
+              </div>
+            )}
+            {this.state.selectedAddress != '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266' && (
+              <div className="mt-4">
+              <div className="text-center">
+              {this.state.balance.eq(0) && (
+                <NoTokensMessage selectedAddress={this.state.selectedAddress} />
+              )}
+              {this.state.balance.gt(0) && (
+                <Webshop
+                  transferTokens={(to, amount) =>
+                    this._transferTokens(to, amount)
+                  }
+                  tokenSymbol={this.state.tokenData.symbol}
+                />
+              )}
+              </div>
+            </div>
+            )}
+          </Card>
         </div>
-
-        <hr />
-
         <div className="row">
           <div className="col-12">
             {/* 
@@ -125,32 +158,6 @@ export class Dapp extends React.Component {
               <TransactionErrorMessage
                 message={this._getRpcErrorMessage(this.state.transactionError)}
                 dismiss={() => this._dismissTransactionError()}
-              />
-            )}
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-12">
-            {/*
-              If the user has no tokens, we don't show the Transfer form
-            */}
-            {this.state.balance.eq(0) && (
-              <NoTokensMessage selectedAddress={this.state.selectedAddress} />
-            )}
-
-            {/*
-              This component displays a form that the user can use to send a 
-              transaction and transfer some tokens.
-              The component doesn't have logic, it just calls the transferTokens
-              callback.
-            */}
-            {this.state.balance.gt(0) && (
-              <Transfer
-                transferTokens={(to, amount) =>
-                  this._transferTokens(to, amount)
-                }
-                tokenSymbol={this.state.tokenData.symbol}
               />
             )}
           </div>
@@ -190,7 +197,7 @@ export class Dapp extends React.Component {
       if (newAddress === undefined) {
         return this._resetState();
       }
-      
+
       this._initialize(newAddress);
     });
   }

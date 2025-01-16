@@ -1,9 +1,11 @@
 import React from "react";
+import { InputText } from "primereact/inputtext";
+import { Button } from 'primereact/button';
+
 
 export function Transfer({ transferTokens, tokenSymbol }) {
   return (
     <div>
-      <h4>Transfer</h4>
       <form
         onSubmit={(event) => {
           // This function just calls the transferTokens callback with the
@@ -19,23 +21,14 @@ export function Transfer({ transferTokens, tokenSymbol }) {
           }
         }}
       >
-        <div className="form-group">
-          <label>Amount of {tokenSymbol}</label>
-          <input
-            className="form-control"
-            type="number"
-            step="1"
-            name="amount"
-            placeholder="1"
-            required
-          />
+        <div className="card flex justify-content-center">
+          <InputText keyfilter="int" placeholder="Anzahl MC" name="amount" />
         </div>
-        <div className="form-group">
-          <label>Recipient address</label>
-          <input className="form-control" type="text" name="to" required />
+        <div className="card flex justify-content-center mt-2">
+          <InputText placeholder="Adresse" name="to" />
         </div>
-        <div className="form-group">
-          <input className="btn btn-primary" type="submit" value="Transfer" />
+        <div className="form-group mt-4">
+          <Button label="Senden" type="submit"/>
         </div>
       </form>
     </div>
