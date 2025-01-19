@@ -97,7 +97,7 @@ export class Dapp extends React.Component {
           <Card>
             <div className="text-center text-900 text-3xl font-medium text">SFZ MusicCoin</div>
             <div className="mt-4 text-center">
-              Wilkommen liebes Mitglied (Account-Nr.:<b>{this.state.selectedAddress}</b>), du hast insgesamt{" "}
+              Wilkommen liebes Mitglied, du hast insgesamt{" "}
               <b>
                 {this.state.balance.toString()} {this.state.tokenData.symbol}
               </b> (MusicCoin).
@@ -132,6 +132,7 @@ export class Dapp extends React.Component {
                     this._transferTokens(to, amount)
                   }
                   tokenSymbol={this.state.tokenData.symbol}
+                  state={this.state}
                 />
               )}
               </div>
@@ -161,6 +162,9 @@ export class Dapp extends React.Component {
               />
             )}
           </div>
+        </div>
+        <div className="text-center text-500 text">
+          {this.state.selectedAddress}
         </div>
       </div>
     );
