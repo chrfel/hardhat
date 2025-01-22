@@ -25,7 +25,7 @@ contract Token {
 
     // The Transfer event helps off-chain aplications understand
     // what happens within your contract.
-    event Transfer(address indexed _from, address indexed _to, uint256 _value);
+    event Transfer(address indexed _from, address indexed _to, uint256 _value, string item);
 
     /**
      * Contract initialization.
@@ -43,7 +43,7 @@ contract Token {
      * The `external` modifier makes a function *only* callable from outside
      * the contract.
      */
-    function transfer(address to, uint256 amount) external {
+    function transfer(address to, uint256 amount, string memory item) external {
         // Check if the transaction sender has enough tokens.
         // If `require`'s first argument evaluates to `false` then the
         // transaction will revert.
@@ -52,18 +52,19 @@ contract Token {
         // We can print messages and values using console.log, a feature of
         // Hardhat Network:
         console.log(
-            "Transferring from %s to %s %s tokens",
+            "Transferring from %s to %s %s tokens for item: ",
             msg.sender,
             to,
             amount
         );
+        console.log(item);
 
         // Transfer the amount.
         balances[msg.sender] -= amount;
         balances[to] += amount;
 
         // Notify off-chain applications of the transfer.
-        emit Transfer(msg.sender, to, amount);
+        emit Transfer(msg.sender, to, amount, item);
     }
 
     /**

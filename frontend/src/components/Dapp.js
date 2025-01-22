@@ -111,8 +111,8 @@ export class Dapp extends React.Component {
                 )}
                 {this.state.balance.gt(0) && (
                   <Transfer
-                    transferTokens={(to, amount) =>
-                      this._transferTokens(to, amount)
+                    transferTokens={(to, amount, item) =>
+                      this._transferTokens(to, amount, item)
                     }
                     tokenSymbol={this.state.tokenData.symbol}
                   />
@@ -128,8 +128,8 @@ export class Dapp extends React.Component {
               )}
               {this.state.balance.gt(0) && (
                 <Webshop
-                  transferTokens={(to, amount) =>
-                    this._transferTokens(to, amount)
+                  transferTokens={(to, amount, item) =>
+                    this._transferTokens(to, amount, item)
                   }
                   tokenSymbol={this.state.tokenData.symbol}
                   state={this.state}
@@ -273,7 +273,7 @@ export class Dapp extends React.Component {
   // This method sends an ethereum transaction to transfer tokens.
   // While this action is specific to this application, it illustrates how to
   // send a transaction.
-  async _transferTokens(to, amount) {
+  async _transferTokens(to, amount, item) {
     // Sending a transaction is a complex operation:
     //   - The user can reject it
     //   - It can fail before reaching the ethereum network (i.e. if the user
@@ -295,7 +295,7 @@ export class Dapp extends React.Component {
 
       // We send the transaction, and save its hash in the Dapp's state. This
       // way we can indicate that we are waiting for it to be mined.
-      const tx = await this._token.transfer(to, amount);
+      const tx = await this._token.transfer(to, amount, item);
       this.setState({ txBeingSent: tx.hash });
 
       // We use .wait() to wait for the transaction to be mined. This method

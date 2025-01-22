@@ -17,7 +17,7 @@ export function Transfer({ transferTokens, tokenSymbol }) {
           const amount = formData.get("amount");
 
           if (to && amount) {
-            transferTokens(to, amount);
+            transferTokens(to, amount, "Gutschrift");
           }
         }}
       >

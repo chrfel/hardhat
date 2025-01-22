@@ -22,7 +22,7 @@ export function Webshop({ transferTokens, tokenSymbol, state }) {
                         const amount = 100;
 
                         if (to && amount) {
-                            transferTokens(to, amount);
+                            transferTokens(to, amount, "#1 T-Shirt");
                         }
                         }}
                     >
@@ -51,7 +51,7 @@ export function Webshop({ transferTokens, tokenSymbol, state }) {
                         const amount = 200;
 
                         if (to && amount) {
-                            transferTokens(to, amount);
+                            transferTokens(to, amount, "#2 Pullover");
                         }
                         }}
                     >
@@ -80,7 +80,7 @@ export function Webshop({ transferTokens, tokenSymbol, state }) {
                         const amount = 50;
 
                         if (to && amount) {
-                            transferTokens(to, amount);
+                            transferTokens(to, amount, "#3 Tasse");
                         }
                         }}
                     >
@@ -109,7 +109,7 @@ export function Webshop({ transferTokens, tokenSymbol, state }) {
                         const amount = 110;
 
                         if (to && amount) {
-                            transferTokens(to, amount);
+                            transferTokens(to, amount, "#4 Cap");
                         }
                         }}
                     >
