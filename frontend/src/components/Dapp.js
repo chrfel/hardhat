@@ -96,6 +96,15 @@ export class Dapp extends React.Component {
         <div className="card p-5">
           <Card>
             <div className="text-center text-900 text-3xl font-medium text">SFZ MusicCoin</div>
+            {this.state.txBeingSent && (
+              <WaitingForTransactionMessage txHash={this.state.txBeingSent} />
+            )}
+            {this.state.transactionError && (
+              <TransactionErrorMessage
+                message={this._getRpcErrorMessage(this.state.transactionError)}
+                dismiss={() => this._dismissTransactionError()}
+              />
+            )}
             <div className="mt-4 text-center">
               Wilkommen liebes Mitglied, du hast insgesamt{" "}
               <b>
@@ -111,8 +120,8 @@ export class Dapp extends React.Component {
                 )}
                 {this.state.balance.gt(0) && (
                   <Transfer
-                    transferTokens={(to, amount, item) =>
-                      this._transferTokens(to, amount, item)
+                    transferTokens={(to, amount, purpose) =>
+                      this._transferTokens(to, amount, purpose)
                     }
                     tokenSymbol={this.state.tokenData.symbol}
                   />
@@ -128,8 +137,8 @@ export class Dapp extends React.Component {
               )}
               {this.state.balance.gt(0) && (
                 <Webshop
-                  transferTokens={(to, amount, item) =>
-                    this._transferTokens(to, amount, item)
+                  transferTokens={(to, amount, purpose) =>
+                    this._transferTokens(to, amount, purpose)
                   }
                   tokenSymbol={this.state.tokenData.symbol}
                   state={this.state}
@@ -147,20 +156,13 @@ export class Dapp extends React.Component {
               for it to be mined.
               If we are waiting for one, we show a message here.
             */}
-            {this.state.txBeingSent && (
-              <WaitingForTransactionMessage txHash={this.state.txBeingSent} />
-            )}
+            
 
             {/* 
               Sending a transaction can fail in multiple ways. 
               If that happened, we show a message here.
             */}
-            {this.state.transactionError && (
-              <TransactionErrorMessage
-                message={this._getRpcErrorMessage(this.state.transactionError)}
-                dismiss={() => this._dismissTransactionError()}
-              />
-            )}
+            
           </div>
         </div>
         <div className="text-center text-500 text">
@@ -273,7 +275,7 @@ export class Dapp extends React.Component {
   // This method sends an ethereum transaction to transfer tokens.
   // While this action is specific to this application, it illustrates how to
   // send a transaction.
-  async _transferTokens(to, amount, item) {
+  async _transferTokens(to, amount, purpose) {
     // Sending a transaction is a complex operation:
     //   - The user can reject it
     //   - It can fail before reaching the ethereum network (i.e. if the user
@@ -295,7 +297,7 @@ export class Dapp extends React.Component {
 
       // We send the transaction, and save its hash in the Dapp's state. This
       // way we can indicate that we are waiting for it to be mined.
-      const tx = await this._token.transfer(to, amount, item);
+      const tx = await this._token.transfer(to, amount, purpose);
       this.setState({ txBeingSent: tx.hash });
 
       // We use .wait() to wait for the transaction to be mined. This method
