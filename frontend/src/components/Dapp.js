@@ -105,12 +105,22 @@ export class Dapp extends React.Component {
                 dismiss={() => this._dismissTransactionError()}
               />
             )}
+            {this.state.selectedAddress != '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266' && (
             <div className="mt-4 text-center">
               Wilkommen liebes Mitglied, du hast insgesamt{" "}
               <b>
                 {this.state.balance.toString()} {this.state.tokenData.symbol}
               </b> (MusicCoin).
             </div>
+            )}
+            {this.state.selectedAddress == '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266' && (
+            <div className="mt-4 text-center">
+              Wilkommen lieber Admin, du hast insgesamt{" "}
+              <b>
+                {this.state.balance.toString()} {this.state.tokenData.symbol}
+              </b> (MusicCoin).
+            </div>
+            )}
             {this.state.selectedAddress == '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266' && (
               <div className="mt-4">
                 <div className="text-center text-900 text-xl font-medium text">MusicCoins überweisen</div>
