@@ -1,38 +1,34 @@
-// This is a script for deploying your contracts. You can adapt it to deploy
-// yours, or create new ones.
-
 const path = require("path");
 
 async function main() {
-  // This is just a convenience check
   if (network.name === "hardhat") {
     console.warn(
-      "You are trying to deploy a contract to the Hardhat Network, which" +
-        "gets automatically created and destroyed every time. Use the Hardhat" +
-        " option '--network localhost'"
+      "You are trying to deploy a contract to the Hardhat Network, which " +
+        "gets automatically created and destroyed every time. Use the Hardhat " +
+        "option '--network localhost'"
     );
   }
 
-  // ethers is available in the global scope
   const [deployer] = await ethers.getSigners();
-  console.log(
-    "Deploying the contracts with the account:",
-    await deployer.getAddress()
-  );
-
+  console.log("Deploying the contracts with the account:", await deployer.getAddress());
   console.log("Account balance:", (await deployer.getBalance()).toString());
 
-  const Token = await ethers.getContractFactory("Token");
-  const token = await Token.deploy();
-  await token.deployed();
+  // Deploy MusicCoin und übergebe deployer als initialOwner
+  const MusicCoin = await ethers.getContractFactory("MusicCoin");
+  const musicCoin = await MusicCoin.deploy(deployer.address);
+  await musicCoin.deployed();
+  console.log("MusicCoin deployed to:", musicCoin.address);
 
-  console.log("Token address:", token.address);
+  // Deploy MusicNFT und übergebe deployer als initialOwner
+  const MusicNFT = await ethers.getContractFactory("MusicNFT");
+  const musicNFT = await MusicNFT.deploy(deployer.address);
+  await musicNFT.deployed();
+  console.log("MusicNFT deployed to:", musicNFT.address);
 
-  // We also save the contract's artifacts and address in the frontend directory
-  saveFrontendFiles(token);
+  saveFrontendFiles(musicCoin, musicNFT);
 }
 
-function saveFrontendFiles(token) {
+function saveFrontendFiles(musicCoin, musicNFT) {
   const fs = require("fs");
   const contractsDir = path.join(__dirname, "..", "frontend", "src", "contracts");
 
@@ -40,16 +36,30 @@ function saveFrontendFiles(token) {
     fs.mkdirSync(contractsDir);
   }
 
+  // Speichere die Adressen beider Contracts in einer JSON-Datei
   fs.writeFileSync(
     path.join(contractsDir, "contract-address.json"),
-    JSON.stringify({ Token: token.address }, undefined, 2)
+    JSON.stringify(
+      {
+        MusicCoin: musicCoin.address,
+        MusicNFT: musicNFT.address,
+      },
+      undefined,
+      2
+    )
   );
 
-  const TokenArtifact = artifacts.readArtifactSync("Token");
-
+  // Artefakte speichern
+  const musicCoinArtifact = artifacts.readArtifactSync("MusicCoin");
   fs.writeFileSync(
-    path.join(contractsDir, "Token.json"),
-    JSON.stringify(TokenArtifact, null, 2)
+    path.join(contractsDir, "MusicCoin.json"),
+    JSON.stringify(musicCoinArtifact, null, 2)
+  );
+
+  const musicNFTArtifact = artifacts.readArtifactSync("MusicNFT");
+  fs.writeFileSync(
+    path.join(contractsDir, "MusicNFT.json"),
+    JSON.stringify(musicNFTArtifact, null, 2)
   );
 }
 
