@@ -5,7 +5,7 @@ import { ethers } from "ethers";
 
 // We import the contract's artifacts and address here, as we are going to be
 // using them with ethers
-import TokenArtifact from "../contracts/Token.json";
+import MusicCoinArtifact from "../contracts/MusicCoin.json";
 import contractAddress from "../contracts/contract-address.json";
 
 // All the logic of this dapp is contained in the Dapp component.
@@ -24,7 +24,7 @@ import { Webshop } from "./Webshop";
 
 
 // This is the default id used by the Hardhat Network
-const HARDHAT_NETWORK_ID = '31337';
+const HARDHAT_NETWORK_ID = '11155111';
 
 // This is an error code that indicates that the user canceled a transaction
 const ERROR_CODE_TX_REJECTED_BY_USER = 4001;
@@ -237,14 +237,14 @@ export class Dapp extends React.Component {
   }
 
   async _initializeEthers() {
-    // We first initialize ethers by creating a provider using window.ethereum
+    // Für Leseoperationen: externer Provider (Infura, Alchemy, etc.)
+    this._readProvider = new ethers.providers.JsonRpcProvider("https://eth-sepolia.g.alchemy.com/v2/YHMO9gpPv-FEFAoI0qkmA");
+    // Für Transaktionen: User-Wallet
     this._provider = new ethers.providers.Web3Provider(window.ethereum);
 
-    // Then, we initialize the contract using that provider and the token's
-    // artifact. You can do this same thing with your contracts.
     this._token = new ethers.Contract(
       contractAddress.Token,
-      TokenArtifact.abi,
+      MusicCoinArtifact.abi,
       this._provider.getSigner(0)
     );
   }
@@ -368,7 +368,7 @@ export class Dapp extends React.Component {
   }
 
   async _switchChain() {
-    const chainIdHex = `0x${HARDHAT_NETWORK_ID.toString(16)}`
+    const chainIdHex = `0x${parseInt(HARDHAT_NETWORK_ID).toString(16)}`;
     await window.ethereum.request({
       method: "wallet_switchEthereumChain",
       params: [{ chainId: chainIdHex }],
