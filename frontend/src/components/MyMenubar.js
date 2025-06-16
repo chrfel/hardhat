@@ -31,7 +31,7 @@ export function MyMenubar() {
             label: 'Auszeichnungen',
             icon: 'pi pi-trophy',
             template: (item, options) => (
-                <Link to="/about" className="flex align-items-center p-menuitem-link">
+                <Link to="/awards" className="flex align-items-center p-menuitem-link">
                     <span className={item.icon} />
                     <span className="mx-2">{item.label}</span>
                 </Link>

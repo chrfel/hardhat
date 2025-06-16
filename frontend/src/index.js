@@ -8,7 +8,8 @@ import "primeicons/primeicons.css";
 import "primereact/resources/primereact.css";
 import { Card } from "primereact/card";
 
-import { Dapp } from "./components/Dapp";
+import { Shop } from "./components/Shop";
+import { Awards } from "./components/Awards";
 import { MyMenubar } from "./components/MyMenubar";
 
 // Beispiel-Komponenten für die Seiten
@@ -28,12 +29,12 @@ function Home() {
   );
 }
 
-function Shop() {
-  return <Dapp />
+function ShopC() {
+  return <Shop />
 }
 
-function About() {
-  return <div className="text-center p-4 text-xl">ℹ️ Über unseren Verein – bald mehr!</div>;
+function AwardsC() {
+  return <Awards/>
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -50,8 +51,8 @@ root.render(
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/shop" element={<ShopC />} />
+          <Route path="/awards" element={<AwardsC />} />
         </Routes>
 
       </Router>
