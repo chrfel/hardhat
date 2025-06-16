@@ -97,7 +97,7 @@ export class Dapp extends React.Component {
       <div className="container">
         <div className="card p-5">
           <Card>
-            <div className="text-center text-900 text-3xl font-medium text">SFZ MusicCoin</div>
+            <div className="text-center text-900 text-3xl font-medium text">SFZ Webshop</div>
             {this.state.txBeingSent && (
               <WaitingForTransactionMessage txHash={this.state.txBeingSent} />
             )}
