@@ -15,6 +15,7 @@ import { NoWalletDetected } from "./NoWalletDetected";
 import { ConnectWallet } from "./ConnectWallet";
 import { Loading } from "./Loading";
 import { Transfer } from "./Transfer";
+import { Mint } from "./Mint";
 import { TransactionErrorMessage } from "./TransactionErrorMessage";
 import { WaitingForTransactionMessage } from "./WaitingForTransactionMessage";
 import { NoTokensMessage } from "./NoTokensMessage";
@@ -25,6 +26,7 @@ import { Webshop } from "./Webshop";
 
 // This is the default id used by the Hardhat Network
 const HARDHAT_NETWORK_ID = '11155111';
+const OWNER = '0x9555cb8e627ecdcdf05414be286e89b8fc717980';
 
 // This is an error code that indicates that the user canceled a transaction
 const ERROR_CODE_TX_REJECTED_BY_USER = 4001;
@@ -105,7 +107,7 @@ export class Dapp extends React.Component {
                 dismiss={() => this._dismissTransactionError()}
               />
             )}
-            {this.state.selectedAddress != '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266' && (
+            {this.state.selectedAddress != OWNER && (
             <div className="mt-4 text-center">
               Wilkommen liebes Mitglied, du hast insgesamt{" "}
               <b>
@@ -113,7 +115,7 @@ export class Dapp extends React.Component {
               </b> (MusicCoin).
             </div>
             )}
-            {this.state.selectedAddress == '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266' && (
+            {this.state.selectedAddress == OWNER && (
             <div className="mt-4 text-center">
               Wilkommen lieber Admin, du hast insgesamt{" "}
               <b>
@@ -121,25 +123,35 @@ export class Dapp extends React.Component {
               </b> (MusicCoin).
             </div>
             )}
-            {this.state.selectedAddress == '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266' && (
+            {this.state.selectedAddress == OWNER && (
               <div className="mt-4">
-                <div className="text-center text-900 text-xl font-medium text">MusicCoins überweisen</div>
-                <div className="mt-4 text-center">
-                {this.state.balance.eq(0) && (
-                  <NoTokensMessage selectedAddress={this.state.selectedAddress} />
-                )}
-                {this.state.balance.gt(0) && (
-                  <Transfer
-                    transferTokens={(to, amount, purpose) =>
-                      this._transferTokens(to, amount, purpose)
+                
+                <div class="flex flex-row flex-wrap justify-content-around text-center">
+                  <div>
+                    <div className="text-center text-900 text-xl font-medium text mb-4">MusicCoins transferieren</div>
+                    <Transfer
+                    transferTokens={(to, amount) =>
+                      this._transferTokens(to, amount)
                     }
                     tokenSymbol={this.state.tokenData.symbol}
-                  />
-                )}
+                    />
+                  </div>
+                  <div>
+                    <div className="text-center text-900 text-xl font-medium text  mb-4">MusicCoins minten</div>
+                    <Mint
+                    mintTokens={(to, amount) =>
+                      this._mintTokens(to, amount)
+                    }
+                    tokenSymbol={this.state.tokenData.symbol}
+                    />
+                  </div>
+                </div>
+                <div className="m">
+                  
                 </div>
               </div>
             )}
-            {this.state.selectedAddress != '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266' && (
+            {this.state.selectedAddress != OWNER && (
               <div className="mt-4">
               <div className="text-center">
               {this.state.balance.eq(0) && (
@@ -148,10 +160,11 @@ export class Dapp extends React.Component {
               {this.state.balance.gt(0) && (
                 <Webshop
                   transferTokens={(to, amount, purpose) =>
-                    this._transferTokens(to, amount, purpose)
+                    this._transferTokens(to, amount)
                   }
                   tokenSymbol={this.state.tokenData.symbol}
                   state={this.state}
+                  OWNER={OWNER}
                 />
               )}
               </div>
@@ -285,7 +298,7 @@ export class Dapp extends React.Component {
   // This method sends an ethereum transaction to transfer tokens.
   // While this action is specific to this application, it illustrates how to
   // send a transaction.
-  async _transferTokens(to, amount, purpose) {
+  async _transferTokens(to, amount) {
     // Sending a transaction is a complex operation:
     //   - The user can reject it
     //   - It can fail before reaching the ethereum network (i.e. if the user
@@ -307,7 +320,7 @@ export class Dapp extends React.Component {
 
       // We send the transaction, and save its hash in the Dapp's state. This
       // way we can indicate that we are waiting for it to be mined.
-      const tx = await this._token.transfer(to, amount, purpose);
+      const tx = await this._token.transfer(to, amount);
       this.setState({ txBeingSent: tx.hash });
 
       // We use .wait() to wait for the transaction to be mined. This method
@@ -340,6 +353,27 @@ export class Dapp extends React.Component {
       // this part of the state.
       this.setState({ txBeingSent: undefined });
     }
+  }
+
+    async _mintTokens(to, amount) {
+      try {
+        this._dismissTransactionError();
+        const tx = await this._token.mint(to, amount);
+        this.setState({ txBeingSent: tx.hash });
+        const receipt = await tx.wait();
+        if (receipt.status === 0) {
+          throw new Error("Transaction failed");
+        }
+        await this._updateBalance();
+      } catch (error) {
+        if (error.code === ERROR_CODE_TX_REJECTED_BY_USER) {
+          return;
+        }
+        console.error(error);
+        this.setState({ transactionError: error });
+      } finally {
+        this.setState({ txBeingSent: undefined });
+      }
   }
 
   // This method just clears part of the state.

@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "title": "T-Shirt",
+        "description": "Ein super tolles T-Shirt. Unisex. Größe kann bei Abholung ausgesucht werden.",
+        "price": 100,
+        "image": "https://scarlet-raw-dormouse-438.mypinata.cloud/ipfs/bafybeift6ippub5yk5tevsc7hdj5cvdyedm4muajovesafw5l25klgdqqi"
+    },
+    {
+        "id": 2,
+        "title": "Pullover",
+        "description": "Ein super toller Pullover. Unisex. Größe kann bei Abholung ausgesucht werden.",
+        "price": 200,
+        "image": "https://scarlet-raw-dormouse-438.mypinata.cloud/ipfs/bafkreidpegn35ihpbonsafesp2idh64qyfj6s2cetu64nursgqhzdlckzm"
+    },
+    {
+        "id": 3,
+        "title": "Tasse",
+        "description": "Ein Highlight für jeden Kaffee!",
+        "price": 50,
+        "image": "https://scarlet-raw-dormouse-438.mypinata.cloud/ipfs/bafybeieh6svd2dbmhzuj77gjl54dp4lklksnu65azrel6nrcprankejkmy"
+    },
+    {
+        "id": 4,
+        "title": "Cap",
+        "description": "Was ist das denn für eine coole Cap? Richtig! Vom SFZ",
+        "price": 110,
+        "image": "https://scarlet-raw-dormouse-438.mypinata.cloud/ipfs/bafkreifguj7xtett6mm6p43mxrjlsjl4lk74pwiecplmaoqljcgo6nswpy"
+    }
+]
