@@ -12,7 +12,7 @@ export function ConnectWallet({ connectWallet, networkError, dismiss }) {
         <Card>
           <div className="text-center text-900 text-3xl font-medium text">Wallet verbinden</div>
           <div className="mt-4 text-center">
-            Um den Shop und die Produkte sehen zu können musst du dich mit deiner Wallet anmelden!
+            Bitte verbinde dich mit deiner Wallet, um den Shop und deine Auszeichnungen sehen zu können.
           </div>
           <div className="flex flex-row justify-content-center mt-3">
             <Button label="Wallet verbinden" onClick={connectWallet}/>

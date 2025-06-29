@@ -5,19 +5,19 @@ import { ethers } from "ethers";
 
 // We import the contract's artifacts and address here, as we are going to be
 // using them with ethers
-import MusicCoinArtifact from "../contracts/MusicCoin.json";
-import contractAddress from "../contracts/contract-address.json";
+import MusicCoinArtifact from "../../contracts/MusicCoin.json";
+import contractAddress from "../../contracts/contract-address.json";
 
 // All the logic of this dapp is contained in the Dapp component.
 // These other components are just presentational ones: they don't have any
 // logic. They just render HTML.
-import { NoWalletDetected } from "./NoWalletDetected";
-import { ConnectWallet } from "./ConnectWallet";
-import { Loading } from "./Loading";
+import { NoWalletDetected } from "../NoWalletDetected";
+import { ConnectWallet } from "../ConnectWallet";
+import { Loading } from "../Loading";
 import { Transfer } from "./Transfer";
 import { Mint } from "./Mint";
-import { TransactionErrorMessage } from "./TransactionErrorMessage";
-import { WaitingForTransactionMessage } from "./WaitingForTransactionMessage";
+import { TransactionErrorMessage } from "../TransactionErrorMessage";
+import { WaitingForTransactionMessage } from "../WaitingForTransactionMessage";
 import { NoTokensMessage } from "./NoTokensMessage";
 
 import { Card } from 'primereact/card';

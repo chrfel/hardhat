@@ -14,14 +14,14 @@ import contractAddress from "../contracts/contract-address.json";
 import { NoWalletDetected } from "./NoWalletDetected";
 import { ConnectWallet } from "./ConnectWallet";
 import { Loading } from "./Loading";
-import { Transfer } from "./Transfer";
-import { Mint } from "./Mint";
+import { Transfer } from "./Shop/Transfer";
+import { Mint } from "./Shop/Mint";
 import { TransactionErrorMessage } from "./TransactionErrorMessage";
 import { WaitingForTransactionMessage } from "./WaitingForTransactionMessage";
-import { NoTokensMessage } from "./NoTokensMessage";
+import { NoTokensMessage } from "./Shop/NoTokensMessage";
 
 import { Card } from 'primereact/card';
-import { Webshop } from "./Webshop";
+import { Webshop } from "./Shop/Webshop";
 
 
 // This is the default id used by the Hardhat Network

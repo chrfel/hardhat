@@ -8,7 +8,7 @@ import "primeicons/primeicons.css";
 import "primereact/resources/primereact.css";
 import { Card } from "primereact/card";
 
-import { Shop } from "./components/Shop";
+import { Shop } from "./components/Shop/Shop";
 import { Awards } from "./components/Awards";
 import { MyMenubar } from "./components/MyMenubar";
 
