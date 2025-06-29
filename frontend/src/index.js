@@ -9,7 +9,7 @@ import "primereact/resources/primereact.css";
 import { Card } from "primereact/card";
 
 import { Shop } from "./components/Shop/Shop";
-import { Awards } from "./components/Awards";
+import { Awards } from "./components/Awards/Awards";
 import { MyMenubar } from "./components/MyMenubar";
 
 // Beispiel-Komponenten für die Seiten

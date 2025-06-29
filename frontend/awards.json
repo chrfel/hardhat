@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "title": "10. Auftritt",
+    "description": "Super! Du hast insgesamt 10 Auftritte gemeistert! Schön, dass du dabei bist :)",
+    "image": "ipfs://bafkreig6rkrgnucvf3dvdrlu3wigvy7fgo27gnulyqkfhxw3kw2hcy5ysu",
+    "attributes": [
+      { "trait_type": "Auftritte", "value": 10 },
+      { "trait_type": "Seltenheit", "value": "Gewöhnlich" }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "25. Auftritt",
+    "description": "Wahnsinn! 25 Auftritte – du bist ein fester Bestandteil der Gruppe. Weiter so!",
+    "image": "ipfs://bafkreihppfjkpvdu33ud3rwp44y3z4ysrbofpkweqcmeh364yaer6p3o4a",
+    "attributes": [
+      { "trait_type": "Auftritte", "value": 25 },
+      { "trait_type": "Seltenheit", "value": "Ungewöhnlich" }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "50. Auftritt",
+    "description": "50 Mal auf der Bühne – das zeigt echte Leidenschaft und Ausdauer. Großartig!",
+    "image": "ipfs://bafkreiejf4jpqf5wxbpoh5s4ovnxubybqdk4j7sf5gs6ydb5bca3iosbwe",
+    "attributes": [
+      { "trait_type": "Auftritte", "value": 50 },
+      { "trait_type": "Seltenheit", "value": "Selten" }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "100. Auftritt",
+    "description": "Ein echter Meilenstein: 100 Auftritte! Deine Treue und dein Einsatz sind unbezahlbar.",
+    "image": "ipfs://bafkreihuo5didaa5bdwkaoy7fhufqudo2wokqmlzjvrsbh3qxwxjbddmhe",
+    "attributes": [
+      { "trait_type": "Auftritte", "value": 100 },
+      { "trait_type": "Seltenheit", "value": "Legendär" }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "150. Auftritt",
+    "description": "150 Auftritte – eine beeindruckende Leistung. Du bist eine echte Legende bei uns!",
+    "image": "ipfs://bafkreiamtnsls6a27det6mgjqh3boqyga6pdzd3xgmakht3txqqn3qcoza",
+    "attributes": [
+      { "trait_type": "Auftritte", "value": 150 },
+      { "trait_type": "Seltenheit", "value": "Episch" }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "200. Auftritt",
+    "description": "200 Mal im Einsatz – du hast Geschichte geschrieben! Danke für dein unglaubliches Engagement.",
+    "image": "ipfs://bafkreidgtlc4ls5vcg6stihtsecwiuh76hul4o72m74lt37wcsbzr4ld4y",
+    "attributes": [
+      { "trait_type": "Auftritte", "value": 200 },
+      { "trait_type": "Seltenheit", "value": "Mythisch" }
+    ]
+  }
+]

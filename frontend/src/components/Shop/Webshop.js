@@ -32,7 +32,7 @@ export function Webshop({ transferTokens, tokenSymbol, state, OWNER }) {
     ];
 
     useEffect(() => {
-    fetch('https://scarlet-raw-dormouse-438.mypinata.cloud/ipfs/bafkreic3rpul3jwlrpr4mqz6c63ttnuutsnm5ja2z72s2krd2ontchc7ni') // ✅ URL deiner JSON-Datei
+    fetch('https://ipfs.io/ipfs/bafkreic3rpul3jwlrpr4mqz6c63ttnuutsnm5ja2z72s2krd2ontchc7ni') // ✅ URL deiner JSON-Datei
       .then((response) => {
         if (!response.ok) {
           throw new Error('Fehler beim Laden der JSON-Datei');
