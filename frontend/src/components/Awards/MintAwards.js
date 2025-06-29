@@ -5,12 +5,13 @@ import { Card } from 'primereact/card';
 import { Carousel } from 'primereact/carousel';
 import { Tag } from 'primereact/tag';
 import { Dropdown } from 'primereact/dropdown';
+import {v4 as uuidv4} from 'uuid';
 
 
-const PINATA_API_KEY = "DEIN_PINATA_API_KEY";
-const PINATA_SECRET_API_KEY = "DEIN_PINATA_SECRET_API_KEY";
+const PINATA_API_KEY = "405f540990ab67ee1b60";
+const PINATA_SECRET_API_KEY = "1a6faf311955314282be7e36f5faea95e1dcc1316ed1c7ae4bdb3e0c86fce7dc";
 
-export function MintAwards() {
+export function MintAwards({ mintAward }) {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [selectedTitle, setSelectedTitle] = useState('');
@@ -63,10 +64,44 @@ export function MintAwards() {
         setSelectedAward(award);
     };
 
-    const handleSubmit = (e) => {
+    // Hilfsfunktion zum Upload an Pinata
+    async function uploadToPinata(award) {
+        const url = "https://api.pinata.cloud/pinning/pinJSONToIPFS";
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                pinata_api_key: PINATA_API_KEY,
+                pinata_secret_api_key: PINATA_SECRET_API_KEY,
+            },
+            body: JSON.stringify({
+                pinataMetadata: { name: award.title + '_' + uuidv4()},
+                pinataContent: award,
+            }),
+        });
+        if (!response.ok) {
+            throw new Error("Fehler beim Upload zu Pinata");
+        }
+        const data = await response.json();
+        console.log(data)
+        return data.IpfsHash; // Die neue CID
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Hier kannst du mit selectedAward weiterarbeiten
-        console.log('Ausgewähltes Objekt:', selectedAward);
+        if (!selectedAward) return;
+        const formData = new FormData(e.target);
+        const to = formData.get("to");
+
+        try {
+            // Award-Objekt zu Pinata hochladen
+            const cid = await uploadToPinata(selectedAward);
+            const url = `ipfs://${cid}`;
+            // NFT minten mit neuer CID
+            mintAward(to, url);
+        } catch (err) {
+            alert("Fehler beim Upload oder Minten: " + err.message);
+        }
     };
 
     if (loading) return <div>Lädt...</div>;
@@ -109,6 +144,9 @@ export function MintAwards() {
                     </Card>
                 </div>
             )}
+            <div className="card flex justify-content-center mt-4">
+                      <InputText placeholder="Adresse" name="to" />
+            </div>
             <Button type="submit" label="Weiter" className="p-ml-2 mt-4" />
             </div>
         </form>

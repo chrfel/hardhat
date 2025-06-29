@@ -10,7 +10,8 @@
     "primereact": "^10.9.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.30.1"
+    "react-router-dom": "^6.30.1",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "react-scripts": "5.0.1"

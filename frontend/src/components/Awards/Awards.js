@@ -11,6 +11,7 @@ import { TransactionErrorMessage } from "../TransactionErrorMessage";
 import { WaitingForTransactionMessage } from "../WaitingForTransactionMessage";
 import { NoNFTMessage } from "./NoNFTMessage";
 import { MintAwards } from "./MintAwards";
+import RarityTag from './RarityTag';
 
 import { Card } from "primereact/card";
 
@@ -57,6 +58,12 @@ export class Awards extends React.Component {
         <div className="card p-5">
           <Card>
             <div className="text-center text-900 text-3xl font-medium text">SFZ Auszeichnungen</div>
+            {this.state.transactionError && (
+              <TransactionErrorMessage
+                message={this._getRpcErrorMessage(this.state.transactionError)}
+                dismiss={() => this._dismissTransactionError()}
+              />
+            )}
             {this.state.selectedAddress != OWNER && this.state.userNFTs.length === 0 && (
               <div className="mt-4">
               <div className="text-center">
@@ -66,26 +73,34 @@ export class Awards extends React.Component {
               
             )}
             {this.state.selectedAddress != OWNER && this.state.userNFTs.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {this.state.userNFTs.map((nft) => (
+              <div className="flex flex-wrap justify-content-center mt-4">
+                {this.state.userNFTs.map((nft) => {
+                  const seltenheitAttr = nft.metadata.attributes.find(attr => attr.trait_type === 'Seltenheit');
+                  const seltenheit = seltenheitAttr ? seltenheitAttr.value : 'Unbekannt';
+                  return (
                   <Card
                     key={nft.tokenId}
-                    title={`#${nft.tokenId}`}
+                    title={`${nft.metadata.title}`}
                     subTitle="MusicNFT"
-                    className="shadow-md"
+                    className="shadow-md text-center m-2"
                   >
                     <img
-                      src={nft.metadata.image || "/placeholder.png"}
-                      alt={`NFT #${nft.tokenId}`}
-                      className="w-full h-auto rounded-md"
-                    />
-                    <p>{nft.metadata.name}</p>
+                        src={`https://ipfs.io/ipfs/${nft.metadata.image.replace('ipfs://', '')}`}
+                        alt={nft.metadata.title}
+                        style={{ width: '150px', marginTop: '1rem' }}
+                        className="mt-4 mb-4"
+                      />
+                    <p>{nft.metadata.description}</p>
+                    <RarityTag rarity={seltenheit} />
                   </Card>
-                ))}
+                )})}
               </div>
             )}
             {this.state.selectedAddress == OWNER &&  (
-              <MintAwards />
+                <MintAwards
+                mintAward={(to, uri) =>
+                  this._safeMint(to, uri)
+                } />
             )}
           </Card>
         </div>
@@ -151,7 +166,7 @@ export class Awards extends React.Component {
       // Hole Metadaten von URI (vorausgesetzt es ist ein öffentlich erreichbarer HTTP-Link oder IPFS Gateway)
       let metadata = {};
       try {
-        const response = await fetch(tokenUri);
+        const response = await fetch(`https://ipfs.io/ipfs/${tokenUri.replace('ipfs://', '')}`);
         metadata = await response.json();
       } catch (err) {
         metadata = { name: "Unbekannter Titel", image: "/placeholder.png" };
@@ -176,7 +191,7 @@ export class Awards extends React.Component {
       this._dismissTransactionError();
 
       // Transaktion ausführen
-      const tx = await this._token.safeMint(toAddress, metadataURI);
+      const tx = await this._contract.safeMint(toAddress, metadataURI);
       this.setState({ txBeingSent: tx.hash });
 
       // Warten bis bestätigt
@@ -210,6 +225,11 @@ export class Awards extends React.Component {
 
     // We run it once immediately so we don't have to wait for it
     this._updateBalance();
+  }
+
+  _stopPollingData() {
+    clearInterval(this._pollDataInterval);
+    this._pollDataInterval = undefined;
   }
 
    // This method just clears part of the state.
