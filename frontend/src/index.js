@@ -15,19 +15,56 @@ import { MyMenubar } from "./components/MyMenubar";
 // Beispiel-Komponenten für die Seiten
 function Home() {
   return (
-    <div className="card p-5">
-      <Card>
-        <div className="text-center text-900 text-3xl font-medium text">Herzlich Willkommmen!</div>
-        <div className="text-center text-900 text-xl font-medium text mt-2">im SFZ Belohnungssystem</div>
-        <div className="mt-4 text-center">
-          Schön, dass du hier bist! Tauche ein in die Welt unseres Vereins und entdecke, was uns antreibt: die Leidenschaft für Musik, Gemeinschaft und Kreativität.
-          Hier kannst du mit unseren exklusiven "MusicCoins" dein Lieblings-Merch erwerben – von stylishen T-Shirts und kuscheligen Pullis bis hin zu praktischen Tassen, die nicht nur deinen Kaffee wärmen, sondern auch dein Herz.
-          Viel Spaß beim Entdecken und Shoppen – wir freuen uns, dich dabei zu haben! 🎶
+    <div className="p-5">
+      {/* Hero Section */}
+      <div className="surface-0 text-center py-6 px-4 shadow-2 border-round mb-5">
+        <div className="text-4xl">🎶</div>
+        <h1 className="text-4xl font-bold text-900 mb-2">Willkommen im SFZ Belohnungssystem!</h1>
+        <p className="text-xl text-700">Deine Plattform für Anerkennung, Gemeinschaft und coole Prämien.</p>
+      </div>
+
+      {/* Info Section */}
+      <div className="grid mb-5">
+        <div className="col-12 md:col-6">
+          <Card title="🎵 Was ist das hier?">
+            <p>
+              In unserem Belohnungssystem kannst du MusicCoins sammeln und gegen tolle Prämien eintauschen.
+              Ob du aktiv musizierst, dich im Verein engagierst oder bei Aktionen hilfst – hier zahlt sich dein Einsatz aus!
+            </p>
+          </Card>
         </div>
-      </Card>
+        <div className="col-12 md:col-6">
+          <Card title="🛍️ Was gibt’s zu holen?">
+            <p>
+              Stylishe T-Shirts, kuschelige Pullis, praktische Tassen und vieles mehr – alles exklusiv für dich!
+              Entdecke den <strong>Shop</strong> und sichere dir deine Wunschprämien.<br></br>
+              Zusätzlich kannst du wertvolle <strong>Auszeichnungen</strong> erhalten.
+            </p>
+          </Card>
+        </div>
+      </div>
+
+      {/* Call to Action Section */}
+      <div className="surface-ground p-4 border-round shadow-2 text-center">
+        <h2 className="text-2xl font-semibold text-900 mb-3">Mach mit & verdiene MusicCoins und Auszeichnungen!</h2>
+        <p className="text-700 mb-4">
+          Dein Engagement im Spielmanns- und Fanfarenzug wird belohnt. Sammle Coins und Auszeichnungen für:
+        </p>
+        <ul className="list-none p-0 m-0 text-left md:text-center text-700 font-medium">
+          <li className="mb-2"><i className="pi pi-check-circle text-green-500 mr-2"></i>Teilnahme an Proben & Auftritten</li>
+          <li className="mb-2"><i className="pi pi-check-circle text-green-500 mr-2"></i>Hilfe bei Veranstaltungen</li>
+          <li className="mb-2"><i className="pi pi-check-circle text-green-500 mr-2"></i>Team-Engagement und mehr</li>
+        </ul>
+      </div>
+
+      {/* Footer-Block */}
+      <div className="mt-6 text-center text-sm text-600">
+        🎶 SFZ Belohnungssystem – Musik verbindet. | © 2025 Spielmanns- und Fanfarenzug
+      </div>
     </div>
   );
 }
+
 
 function ShopC() {
   return <Shop />

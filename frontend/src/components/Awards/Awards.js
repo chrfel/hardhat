@@ -38,7 +38,6 @@ export class Awards extends React.Component {
     if (window.ethereum === undefined) {
       return <NoWalletDetected />;
     }
-
     if (!this.state.selectedAddress) {
       return (
         <ConnectWallet
@@ -58,6 +57,9 @@ export class Awards extends React.Component {
         <div className="card p-5">
           <Card>
             <div className="text-center text-900 text-3xl font-medium text">SFZ Auszeichnungen</div>
+            {this.state.txBeingSent && (
+              <WaitingForTransactionMessage txHash={this.state.txBeingSent} />
+            )}
             {this.state.transactionError && (
               <TransactionErrorMessage
                 message={this._getRpcErrorMessage(this.state.transactionError)}
